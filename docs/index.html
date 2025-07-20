@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Презентация с картинками</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/black.min.css">
+    <style>
+        .slides section {
+            height: 100vh;
+            width: 100vw;
+            padding: 0 !important;
+            margin: 0 !important;
+            position: relative;
+            overflow: hidden;
+        }
+        .slide-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            filter: blur(10px) brightness(0.7);
+        }
+        .reveal img.slide-img {
+            width: 100%;
+            max-width: 100%;
+            height: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            position: relative;
+            z-index: 2;
+            margin: 0;
+        }
+        .reveal .slides {
+            width: 100% !important;
+            height: 100% !important;
+            top: 0 !important;
+            left: 0 !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides" id="slides-container"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script>
+        const images = [
+            '1.png', 'lid.JPG', '3.png', '4.png', 
+            'dushan.png', 'rick0.png', 'rick1.png', 
+            'rick2.png', 'rick3.png', '5.png'
+        ];
+
+        const slidesContainer = document.getElementById('slides-container');
+        
+        images.forEach(img => {
+            const slide = document.createElement('section');
+            slide.innerHTML = `
+                <div class="slide-bg" style="background-image: url('${img}')"></div>
+                <img class="slide-img" src="${img}" alt="Slide">
+            `;
+            slidesContainer.appendChild(slide);
+        });
+
+        Reveal.initialize({
+            margin: 0,
+            width: '100%',
+            height: '100%',
+            transition: 'none',
+        });
+    </script>
+</body>
+</html>
