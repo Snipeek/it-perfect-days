@@ -33,6 +33,13 @@
             z-index: 2;
             margin: 0;
         }
+        .video-slide video {
+            width: 100%;
+            max-width: 100%;
+            height: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
         .reveal .slides {
             width: 100% !important;
             height: 100% !important;
@@ -51,13 +58,12 @@
         const images = [
             'black.jpeg',
             '1.png', '2.png', 'lid.JPG', '3.png', '4.png', 
-            'dushan.png', 'rick0.png', 'rick1.png', 
-            'rick2.png', 'rick3.png', '5.png',
-            'black.jpeg',
+            'dushan.png', '5.png',
         ];
 
         const slidesContainer = document.getElementById('slides-container');
         
+        // Добавляем слайды с изображениями
         images.forEach(img => {
             const slide = document.createElement('section');
             slide.innerHTML = `
@@ -67,11 +73,41 @@
             slidesContainer.appendChild(slide);
         });
 
+        // Добавляем слайд с видео
+        const videoSlide = document.createElement('section');
+        videoSlide.className = 'video-slide';
+        videoSlide.innerHTML = `
+            <video id="video">
+                <source src="memory.MP4" type="video/mp4">
+                Ваш браузер не поддерживает видео.
+            </video>
+        `;
+        slidesContainer.appendChild(videoSlide);
+
         Reveal.initialize({
             margin: 0,
             width: '100%',
             height: '100%',
             transition: 'none',
+        });
+
+        // Получаем ссылку на видео
+        const video = document.getElementById('video');
+
+        console.log('video', video)
+
+        // Событие при смене слайда
+        Reveal.addEventListener('slidechanged', function(event) {
+            // Проверяем, является ли текущий слайд видео-слайдом
+            const isVideoSlide = event.currentSlide.classList.contains('video-slide');
+            
+            if (isVideoSlide) {
+                // Запускаем видео
+                video.play().catch(e => console.log("Автовоспроизведение заблокировано:", e));
+            } else {
+                // Приостанавливаем видео, если ушли с видео-слайда
+                video.pause();
+            }
         });
     </script>
 </body>
